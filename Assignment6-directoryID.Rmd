@@ -1,0 +1,60 @@
+---
+title: "INFO 3010 - Assignment 6"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## by Lingzi Hong
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+4. You can get 5 bonus points for using ggplot2 package.
+
+
+### Q1. (5pts) Download the 'HousePrice.csv' dataset. Read the dataset to a dataframe. Check the structure of the dataframe.
+```{r}
+HousePrice_df <- read.csv('C:\\Users\\Sam\\Documents\\INFO3010\\assignment downloads\\HousePrice.csv')
+
+str(HousePrice_df)
+
+```
+
+### Q2. (10pts) Draw a density plot and a histogram to check the distribution of house price. What's the difference between the histogram and density plot?
+```{r}
+hist(HousePrice_df$Price)
+```
+
+### Q3. 1) (5pts) Get a subset of data with postal code as "98178","98146" and "98118".  2) (10pts) Draw a scatter plot with the subset data. It has Sqft_Area in x-axis, Price in y-axis. The dots are colored by postal code.  
+```{r}
+subset <- HousePrice_df[(HousePrice_df$Postal==98178)|(HousePrice_df$Postal==98146)|(HousePrice_df$Postal==98118),]
+
+library(ggplot2)
+
+x <- ggplot(data = subset)+
+  geom_point(mapping = aes(x=Sqft_Area, Price),color = subset$Postal)
+
+x
+```
+
+
+### Q4. (10pts) Randomly choose a dataset you are interested. You may also keep using the hourseprice dataset. Draw a scatter plot matrix. What do you find? Write 2-3 sentences about your finding. Remember to write the sentences outside of code chunk.
+
+```{r}
+pairs(~Crime+Price+MedIncome,data=HousePrice_df,lower.panel=panel.smooth)
+
+#
+
+```
+
+### Q5. (10pts) Choose any three variables from Q4 and draw a plot to explore the relations of the three variables. 
+```{r}
+
+p <- ggplot(HousePrice_df, aes(x = Crime, y = Sqft_Area , color = Population )) +
+  geom_point()
+p
+```
+
